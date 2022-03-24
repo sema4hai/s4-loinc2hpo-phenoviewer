@@ -9,54 +9,63 @@
 
 library(shiny)
 
+parse_termIdInput <- function(inputString) {
+  flatten_chr(str_split(str_remove_all(inputString, ' '), ','))
+}
+
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
   
   termIdLongitudinal <- reactive({
-    input$termIdLongitudinal
+    parse_termIdInput(inputString = input$termIdLongitudinal)
   })
 
   output$termIdLongitudinal <- renderText(
-    termIdLongitudinal()
+    str_c(termIdLongitudinal(), collapse = ",")
   )
   
   termIdRacialDifferences <- reactive({
-    input$termIdRacialDifferences
+    parse_termIdInput(inputString = input$termIdRacialDifferences)
   })
   
   output$termIdRacialDifferences <- renderText(
-    termIdRacialDifferences()
+    str_c(termIdRacialDifferences(), collapse = ',')
   )
-
-  output$distPlot <- renderPlot({
-
-      # generate bins based on input$bins from ui.R
-      x    <- faithful[, 2]
-      bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-      # draw the histogram with the specified number of bins
-      hist(x, breaks = bins, col = 'darkgray', border = 'white')
-
-  })
   
   ## Plot longitudinal changes of being tested for specified phenotype
+  output$tableTestedLongitudinal <- renderDataTable({
+    table_phenotype_been_tested_longitudinal(termIdLongitudinal())
+  })
+  
   output$plotTestedLongitudinal <- renderPlot({
-    
+    plot_phenotype_been_tested_longitudinal(termIdLongitudinal())
   })
   
   ## Plot longitudinal changes of being observed for specified phenotype
+  output$tableObservedLongitudinal <- renderDataTable({
+    table_phenotype_been_observed_longitudinal(termIdLongitudinal())
+  })
+  
   output$plotObservedLongitudinal <- renderPlot({
-    
+    plot_phenotype_been_observed_longitudinal(termIdLongitudinal())
   })
   
   ## Plot racial differences for being tested for specified phenotype
+  output$tableTestedRacialDifference <- renderDataTable({
+    table_phenotype_been_tested_racial_difference_by_phenotype(termIdRacialDifferences())
+  })
+  
   output$plotTestedRacialDifference <- renderPlot({
-    
+    plot_phenotype_been_tested_racial_difference_by_phenotype(termIdRacialDifferences())
   })
   
   ## Plot racial differences for being observed for specified phenotype
+  output$tableObservedRacialDifference <- renderDataTable({
+    table_phenotype_been_observed_racial_difference_by_phenotype(termids = termIdRacialDifferences())
+  })
+  
   output$plotObservedRacialDifference <- renderPlot({
-    
+    plot_phenotype_been_observed_racial_difference_by_phenotype(termids = termIdRacialDifferences())
   })
 
 })
