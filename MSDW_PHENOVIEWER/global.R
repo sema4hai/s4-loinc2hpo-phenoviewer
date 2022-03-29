@@ -135,3 +135,21 @@ plot_phenotype_been_tested_racial_difference_by_phenotype <- function(termids){
     }
 }
 
+
+################################################################################
+# Human Phenotype Ontology
+# This section is for parsing HPO into a tree structure
+################################################################################
+hp_term_list_path <- '/Users/xingminzhang/git/s4-pd-dmsdw/pd-dmsdw-loinc2hpo-app/src/main/resources/hp_term_list.csv'
+hp_is_a_pairs_path <- '/Users/xingminzhang/git/s4-pd-dmsdw/pd-dmsdw-loinc2hpo-app/src/main/resources/hp_is_a_pairs.csv'
+hp_term_list <- read_csv(hp_term_list_path, col_names = c('termid', 'distance_to_root', 'label'))
+hp_is_a_pairs <- read_csv(hp_is_a_pairs_path)
+
+parse_hpo_to_tree <- function(hp_term_list_path, hp_is_a_pairs_path){
+  # TODO: parse HPO to return a tree structure
+  hp_tree <- list()
+  return (hp_tree)
+}
+
+
+

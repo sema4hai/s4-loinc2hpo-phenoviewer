@@ -9,10 +9,22 @@
 
 library(shiny)
 library(DT)
+library(shinyWidgets)
 
-mySideBar <- function(inputId, value='HP:0001901, HP:0500267, HP:0000118') {
+
+mySideBar <- function(multiInputId, defaultSelections, choices = hp_term_list$termid, ...) {
   sidebarPanel(
-    textInput(inputId = inputId, label = "HPO TermId", value = value )
+    multiInput(inputId = multiInputId, label = "Choose term(s)", 
+               #choices = choices,
+               #choiceNames = str_c(hp_term_list$termid, hp_term_list$label, sep = " "),
+               choiceNames = hp_term_list %>% filter(termid %in% choices) %>% mutate(display = str_c(termid, label, sep = " ")) %>% pull(display),
+               choiceValues = hp_term_list %>% filter(termid %in% choices) %>% pull(termid),
+               selected = defaultSelections,
+               options = list(
+                 enable_search = TRUE,
+                 non_selected_header = "Choose between\n(click to select):",
+                 selected_header = "You have selected\n(click to unselect):"
+               ))
   )
 }
 
@@ -20,7 +32,9 @@ mySideBar <- function(inputId, value='HP:0001901, HP:0500267, HP:0000118') {
 shinyUI(navbarPage(
   "MSDW Lab Phenotype Viewer",
   tabPanel("Longitudinal", 
-           mySideBar(inputId = "termIdLongitudinal", value = "HP:0000119, HP:0000707, HP:0000818, HP:0001197, HP:0001626" ),
+           mySideBar(multiInputId = "multiInputLongitudinal",
+                     defaultSelections = c("HP:0000119", "HP:0000707", "HP:0000818", "HP:0001197", "HP:0001626"),
+                     choices = intersect(hp_term_list$termid, unique(tested_phenotype_rank_all_by_year$termid))),
            mainPanel(
              tabsetPanel(
                tabPanel("Plot",
@@ -38,16 +52,18 @@ shinyUI(navbarPage(
            
   
   tabPanel("Racial Differences", 
-           mySideBar(inputId = "termIdRacialDifferences"), 
+           mySideBar(multiInputId = "multiInputRacialDifferences",
+                     defaultSelections = c('HP:0001901', 'HP:0500267', 'HP:0000118'),
+                     choices = intersect(hp_term_list$termid, unique(racial_tested_abnormality_fisher$termid))), 
            mainPanel(
              tabsetPanel(
                tabPanel("Plot",
                         #h2("Racial Differences specified HPO TermId"),
                         #textOutput(outputId = "termIdRacialDifferences"),
                         h4("Racial differences for phenotype being tested"),
-                        plotOutput(outputId = "plotTestedRacialDifference"),
+                        plotOutput(outputId = "plotTestedRacialDifference", height = "100%"),
                         h4("Racial difference for phenotype being observed"),
-                        plotOutput(outputId = "plotObservedRacialDifference")),
+                        plotOutput(outputId = "plotObservedRacialDifference", height = "100%")),
                tabPanel("Table",
                         h4("Racial differences for phenotype being tested"),
                         DT::dataTableOutput(outputId = "tableTestedRacialDifference"),
