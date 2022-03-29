@@ -1,5 +1,10 @@
-library(tidyverse)
+APP.VERSION <- "0.1"
+TEST.MODE <- TRUE
 
+DATA_DIR <- ifelse(TEST.MODE, 'data-test', 'data')
+
+
+library(tidyverse)
 
 
 my_plot_theme <- function(){
@@ -18,9 +23,9 @@ my_plot_theme <- function(){
 ################################################################################
 
 ## Load data
-phenotype_rank_all_by_year <- read_csv('data/longitudinal/observed_phenotype_rank_all_by_year.csv')
-tested_phenotype_rank_all_by_year <- read_csv('data/longitudinal/tested_phenotype_rank_all_by_year.csv')
-tested_patient_count_by_year <- read_csv('data/longitudinal/tested_patient_count_by_year.csv')
+phenotype_rank_all_by_year <- read_csv(str_glue('{DATA_DIR}/longitudinal/observed_phenotype_rank_all_by_year.csv'))
+tested_phenotype_rank_all_by_year <- read_csv(str_glue('{DATA_DIR}/longitudinal/tested_phenotype_rank_all_by_year.csv'))
+tested_patient_count_by_year <- read_csv(str_glue('{DATA_DIR}/longitudinal/tested_patient_count_by_year.csv'))
 
 ## Define Plotting Methods
 plot_phenotypes_of_interest_by_year <- function(terms_of_interest, df, normalize=TRUE){
@@ -81,8 +86,8 @@ plot_phenotype_been_tested_longitudinal <- function(termids){
 ################################################################################
 
 ## Load data
-racial_abnormality_fisher <- read_csv('data/racial_difference/racial_abnormality_fisher.csv')
-racial_tested_abnormality_fisher <- read_csv('data/racial_difference/racial_tested_abnormality_fisher.csv')
+racial_abnormality_fisher <- read_csv(str_glue('{DATA_DIR}/racial_difference/racial_abnormality_fisher.csv'))
+racial_tested_abnormality_fisher <- read_csv(str_glue('{DATA_DIR}/racial_difference/racial_tested_abnormality_fisher.csv'))
 
 
 ## define data subsetting and plotting methods
@@ -140,13 +145,14 @@ plot_phenotype_been_tested_racial_difference_by_phenotype <- function(termids){
 # Human Phenotype Ontology
 # This section is for parsing HPO into a tree structure
 ################################################################################
-hp_term_list_path <- '/Users/xingminzhang/git/s4-pd-dmsdw/pd-dmsdw-loinc2hpo-app/src/main/resources/hp_term_list.csv'
-hp_is_a_pairs_path <- '/Users/xingminzhang/git/s4-pd-dmsdw/pd-dmsdw-loinc2hpo-app/src/main/resources/hp_is_a_pairs.csv'
+hp_term_list_path <- str_glue('{DATA_DIR}/hpo/hp_term_list.csv')
+hp_is_a_pairs_path <- str_glue('{DATA_DIR}/hpo/hp_is_a_pairs.csv')
 hp_term_list <- read_csv(hp_term_list_path, col_names = c('termid', 'distance_to_root', 'label'))
 hp_is_a_pairs <- read_csv(hp_is_a_pairs_path)
 
 parse_hpo_to_tree <- function(hp_term_list_path, hp_is_a_pairs_path){
   # TODO: parse HPO to return a tree structure
+  # then use the shinyTree package to allow users traverse and select terms for visualization
   hp_tree <- list()
   return (hp_tree)
 }

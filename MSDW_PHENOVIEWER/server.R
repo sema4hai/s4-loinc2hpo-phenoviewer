@@ -41,7 +41,7 @@ shinyServer(function(input, output, session) {
   
   output$plotTestedLongitudinal <- renderPlot({
     plot_phenotype_been_tested_longitudinal(termIdLongitudinal())
-  })
+  }, width = 900, height = 400)
   
   ## Plot longitudinal changes of being observed for specified phenotype
   output$tableObservedLongitudinal <- renderDataTable({
@@ -50,7 +50,7 @@ shinyServer(function(input, output, session) {
   
   output$plotObservedLongitudinal <- renderPlot({
     plot_phenotype_been_observed_longitudinal(termIdLongitudinal())
-  })
+  }, width = 900, height = 400)
   
   ## Plot racial differences for being tested for specified phenotype
   output$tableTestedRacialDifference <- renderDataTable({
@@ -59,7 +59,7 @@ shinyServer(function(input, output, session) {
   
   output$plotTestedRacialDifference <- renderPlot({
     plot_phenotype_been_tested_racial_difference_by_phenotype(termIdRacialDifferences())
-  }, width = 800, height = 800)
+  }, width = 900, height = 900)
   
   ## Plot racial differences for being observed for specified phenotype
   output$tableObservedRacialDifference <- renderDataTable({
@@ -68,6 +68,6 @@ shinyServer(function(input, output, session) {
   
   output$plotObservedRacialDifference <- renderPlot({
     plot_phenotype_been_observed_racial_difference_by_phenotype(termids = termIdRacialDifferences())
-  }, width = 800, height = 800)
+  }, width = 900, height = 900)
 
 })

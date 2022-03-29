@@ -14,7 +14,7 @@ library(shinyWidgets)
 
 mySideBar <- function(multiInputId, defaultSelections, choices = hp_term_list$termid, ...) {
   sidebarPanel(
-    multiInput(inputId = multiInputId, label = "Choose term(s)", 
+    multiInput(inputId = multiInputId, label = "Choose term(s) for visualization", 
                #choices = choices,
                #choiceNames = str_c(hp_term_list$termid, hp_term_list$label, sep = " "),
                choiceNames = hp_term_list %>% filter(termid %in% choices) %>% mutate(display = str_c(termid, label, sep = " ")) %>% pull(display),
@@ -30,7 +30,7 @@ mySideBar <- function(multiInputId, defaultSelections, choices = hp_term_list$te
 
 # Define UI for application that draws a histogram
 shinyUI(navbarPage(
-  "MSDW Lab Phenotype Viewer",
+  paste0("MSDW Lab Phenotype Viewer (version: ", APP.VERSION, ")"),
   tabPanel("Longitudinal", 
            mySideBar(multiInputId = "multiInputLongitudinal",
                      defaultSelections = c("HP:0000119", "HP:0000707", "HP:0000818", "HP:0001197", "HP:0001626"),
@@ -41,9 +41,9 @@ shinyUI(navbarPage(
                         #h2("Specified HPO TermId"),
                         #textOutput(outputId = "termIdLongitudinal"),
                         h4("Longitudinal changes for phenotype being tested"),
-                        plotOutput(outputId = "plotTestedLongitudinal"),
+                        plotOutput(outputId = "plotTestedLongitudinal", height = "100%"),
                         h4("Longitudinal changes for phenotype being observed"),
-                        plotOutput(outputId = "plotObservedLongitudinal")),
+                        plotOutput(outputId = "plotObservedLongitudinal", height = "100%")),
                tabPanel("Table",
                         h4("Longitudinal changes for phenotype being tested"),
                         DT::dataTableOutput(outputId = "tableTestedLongitudinal"),
@@ -107,6 +107,8 @@ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
                      br(),
                      br(),
                      h4("Contact"),
-                     p("For all questions, contact aaron.zhang@sema4.com or xiaoyan.wang@sema4.com")))
+                     p("For all questions, contact aaron.zhang@sema4.com or xiaoyan.wang@sema4.com"))),
+  
+  footer = includeHTML("footer.html")
   )
 )
