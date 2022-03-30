@@ -17,7 +17,8 @@ parse_termIdInput <- function(inputString) {
 shinyServer(function(input, output, session) {
   
   termIdLongitudinal <- reactive({
-    parse_termIdInput(inputString = input$termIdLongitudinal)
+    #parse_termIdInput(inputString = input$termIdLongitudinal)
+    input$multiInputLongitudinal
   })
 
   output$termIdLongitudinal <- renderText(
@@ -25,7 +26,8 @@ shinyServer(function(input, output, session) {
   )
   
   termIdRacialDifferences <- reactive({
-    parse_termIdInput(inputString = input$termIdRacialDifferences)
+    #parse_termIdInput(inputString = input$termIdRacialDifferences)
+    input$multiInputRacialDifferences
   })
   
   output$termIdRacialDifferences <- renderText(
@@ -39,7 +41,7 @@ shinyServer(function(input, output, session) {
   
   output$plotTestedLongitudinal <- renderPlot({
     plot_phenotype_been_tested_longitudinal(termIdLongitudinal())
-  })
+  }, width = 900, height = 400)
   
   ## Plot longitudinal changes of being observed for specified phenotype
   output$tableObservedLongitudinal <- renderDataTable({
@@ -48,7 +50,7 @@ shinyServer(function(input, output, session) {
   
   output$plotObservedLongitudinal <- renderPlot({
     plot_phenotype_been_observed_longitudinal(termIdLongitudinal())
-  })
+  }, width = 900, height = 400)
   
   ## Plot racial differences for being tested for specified phenotype
   output$tableTestedRacialDifference <- renderDataTable({
@@ -57,7 +59,7 @@ shinyServer(function(input, output, session) {
   
   output$plotTestedRacialDifference <- renderPlot({
     plot_phenotype_been_tested_racial_difference_by_phenotype(termIdRacialDifferences())
-  })
+  }, width = 900, height = 900)
   
   ## Plot racial differences for being observed for specified phenotype
   output$tableObservedRacialDifference <- renderDataTable({
@@ -66,6 +68,6 @@ shinyServer(function(input, output, session) {
   
   output$plotObservedRacialDifference <- renderPlot({
     plot_phenotype_been_observed_racial_difference_by_phenotype(termids = termIdRacialDifferences())
-  })
+  }, width = 900, height = 900)
 
 })
