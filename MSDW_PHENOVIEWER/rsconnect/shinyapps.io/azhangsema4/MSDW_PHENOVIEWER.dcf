@@ -1,0 +1,14 @@
+name: MSDW_PHENOVIEWER
+title: MSDW_PHENOVIEWER
+username:
+account: azhangsema4
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5965894
+bundleId: 5742091
+url: https://azhangsema4.shinyapps.io/MSDW_PHENOVIEWER/
+when: 1648587408.5202
+lastSyncTime: 1648587408.52021
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: data
