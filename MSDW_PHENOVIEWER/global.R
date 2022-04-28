@@ -1,5 +1,5 @@
 APP.VERSION <- "0.1"
-TEST.MODE <- TRUE
+TEST.MODE <- FALSE
 
 DATA_DIR <- ifelse(TEST.MODE, 'data-test', 'data')
 
