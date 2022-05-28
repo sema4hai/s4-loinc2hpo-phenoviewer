@@ -30,7 +30,7 @@ mySideBar <- function(multiInputId, defaultSelections, choices = hp_term_list$te
 
 # Define UI for application that draws a histogram
 shinyUI(navbarPage(
-  paste0("MSDW Lab Phenotype Viewer (version: ", APP.VERSION, ")"),
+  paste0("Sema4 Lab Phenotype Viewer (version: ", APP.VERSION, ")"),
   tabPanel("Longitudinal", 
            mySideBar(multiInputId = "multiInputLongitudinal",
                      defaultSelections = c("HP:0000119", "HP:0000707", "HP:0000818", "HP:0001197", "HP:0001626"),
@@ -75,7 +75,7 @@ shinyUI(navbarPage(
            mainPanel(h4("What is the app"),
                      p("This is a visualization tool to show the phenotypic 
                        diversity that are algorithmically transformed from clinical 
-                       lab tests within the Mount Sinai Data Warehouse. "),
+                       lab tests within the Sema4 EHR dataset. "),
                      br(),
                      br(),
                      h4("How to use"),
@@ -85,13 +85,11 @@ shinyUI(navbarPage(
                      br(),
                      br(),
                      h4("Authors"),
-                     p("Biopharmar Research, Sema4"),
-                     p("TODO: add more authors"),
+                     p("Biopharma Research, Sema4"),
                      br(),
                      br(),
                      h4("License"),
                      p("Copyright (c) 2022 Sema4"),
-                     p("TODO: ask Sema4 legal and add Sema4 clauses"),
                      p("THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
                  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -103,11 +101,11 @@ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
                      br(),
                      h4("Reference and Citation"),
                      p("The App has an accompany manuscript, which includes technical details."),
-                     p("TODO: add link for manuscript"),
+                     p("TODO: add link to manuscript preprint"),
                      br(),
                      br(),
                      h4("Contact"),
-                     p("For all questions, contact aaron.zhang@sema4.com or xiaoyan.wang@sema4.com"))),
+                     p("For all questions, contact Xingmin Zhang (xzhang66@wisc.edu) or Xiaoyan Wang (xiaoyan.wang@sema4.com)"))),
   
   footer = includeHTML("footer.html")
   )
